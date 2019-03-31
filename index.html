@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <h1>My blog</h1>
+    <div class="entry1">
+        <h2 class="example">Greate day bird watching</h2>
+        <p>Today I saw three</p>
+        <p>I took a couple of photos</p>
+    </div>
+    <ul id="todo-list">
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+    </ul>
+
+    <script>
+        var todoList = document.getElementById('todo-list');
+        var newTodo = document.createElement('li');
+        newTodo.textContent = 'duc';
+        todoList.appendChild(newTodo);
+        var removeTodo = document.getElementsByTagName('li');
+        removeTodo[1].remove();
+
+
+    </script>
+</body>
+
+</html>

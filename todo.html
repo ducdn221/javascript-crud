@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="new-item" type="text">
+    <button id="add-btn">Add</button>
+    <ul id='todo-list'>
+        <!-- <li>Take shower</li>
+        <li>Have a walk</li>
+        <li>Go to bed</li> -->
+    </ul>
+
+    <p class="foo">Hello word</p>
+    <p class="foo">Hi everyone</p>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        var url = 'http://localhost:9081/todos';
+        axios.get(url).then(function (res) {
+            var items = res.data;
+            console.log('data loadded');
+            render(items);
+        })
+        // var storageKey = 'todoList';
+        // var dataString = localStorage.getItem(storageKey)
+        // var todoList;
+        // if(dataString) {
+        //     todoList = JSON.parse(dataString);
+        // }else{
+        //     todoList = [];
+        // }
+        var addBtn = document.getElementById('add-btn');
+        // addBtn.onclick = addItem;
+        addBtn.addEventListener('click', addItem);
+        // render();
+        var getTag = document.getElementsByTagName('p');
+        for (let item of getTag) {
+            item.innerHTML = item.innerHTML + '<a href="coders.tokyo">Coders Tokyo</a>';
+        }
+
+        function addItem() {
+            var input = document.getElementById('new-item');
+            var newItem = input.value;
+            todoList.push(newItem);
+            render();
+            input.value = '';
+            // localStorage.setItem(storageKey,JSON.stringify(todoList));
+        }
+
+        function render(items) {
+            var htmlList = document.getElementById('todo-list');
+            var content = '';
+            content = items.map(function (item) {
+                return '<li>' + item.content + '</li>';
+            })
+            content = content.join("");
+            htmlList.innerHTML = content;
+        }
+    </script>
+</body>
+
+</html>

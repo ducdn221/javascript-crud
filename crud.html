@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <form id="formCrud">
+        <div>
+            <label>Content: </label>
+            <input type="text" name="content" id="idContent" />
+        </div>
+
+        <div>
+            <button type="button" id="createContent">Create</button>
+            <button id="clearButton" type="button">Clear</button>
+        </div>
+    </form>
+    <table id="table-student">
+
+    </table>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/javascript">
+        var url = 'http://localhost:9081/todos';
+
+        getData();
+
+        function getData() {
+            axios.get(url).then(function (res) {
+                var items = res.data;
+                render(items);
+            })
+        }
+        var btnAdd = document.getElementById('createContent');
+        btnAdd.onclick = addContent;
+
+        function addContent() {
+            var content = document.getElementById('idContent');
+            console.log(content.value);
+        }
+
+        function render(items) {
+            var content = '';
+            var htmlList = document.getElementById('table-student');
+            content = items.map(function (item) {
+                return '<tr><td>' + item.id + '</td><td>' + item.content + '</td><td><button onClick ="update(' + item.id + ')">' + 'Edit' + '</button></td>'
+                    + '<td><button onClick ="deleteRow(' + item.id + ')">' + 'Delete' + '</button></td></tr>';
+            })
+            htmlList.innerHTML = content.join("");
+        }
+
+        function update(item) {
+            console.log(item);
+        }
+
+        function deleteRow(item) {
+            console.log(item);
+        }
+
+    </script>
+</body>
+
+</html>
