@@ -28,13 +28,14 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script type="text/javascript">
-        var url = 'http://localhost:9081/todos';
-
+        var url = 'http://localhost:3001/todos/';
+        var contentTxt = document.getElementById('idContent');
+        var items = [];
         getData();
 
         function getData() {
             axios.get(url).then(function (res) {
-                var items = res.data;
+                items = res.data;
                 render(items);
             })
         }
@@ -42,26 +43,47 @@
         btnAdd.onclick = addContent;
 
         function addContent() {
-            var content = document.getElementById('idContent');
-            console.log(content.value);
+            axios.post(url, {
+                content: contentTxt.value
+            }).then(function (res) {
+                getData();
+                contentTxt.value = '';
+            })
         }
 
         function render(items) {
             var content = '';
             var htmlList = document.getElementById('table-student');
             content = items.map(function (item) {
-                return '<tr><td>' + item.id + '</td><td>' + item.content + '</td><td><button onClick ="update(' + item.id + ')">' + 'Edit' + '</button></td>'
+                return '<tr><td>' + item.id + '</td><td>' + item.content + '</td><td><button onClick ="edit(' + item.id + ')">' + 'Edit' + '</button></td>'
+                    + '<td><button onClick ="update(' + item.id + ')">' + 'Update' + '</button></td>'
                     + '<td><button onClick ="deleteRow(' + item.id + ')">' + 'Delete' + '</button></td></tr>';
             })
             htmlList.innerHTML = content.join("");
         }
 
+        function edit(item) {
+            var filter = items.find(function (data) {
+                return item === data.id;
+            })
+
+            contentTxt.value = filter.content;
+        }
+
         function update(item) {
-            console.log(item);
+            axios.put(url + item, {
+                content: contentTxt.value
+            }).then(function (res) {
+                getData();
+                contentTxt.value = '';
+            });
         }
 
         function deleteRow(item) {
-            console.log(item);
+            axios.delete(url + item)
+                .then(function (res) {
+                    getData();
+                })
         }
 
     </script>
